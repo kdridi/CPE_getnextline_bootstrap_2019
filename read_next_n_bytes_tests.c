@@ -35,16 +35,38 @@ Test(read_next_n_bytes, should_handle_empty_read, .init = open_file, .fini = clo
 
 Test(read_next_n_bytes, should_handle_non_empty_read, .init = open_file, .fini = close_file)
 {
-    char *str = read_next_n_bytes(fd, 4);
+    char *str;
+    
+    str = read_next_n_bytes(fd, 4);
     cr_assert_not_null(str);
     cr_assert_str_eq("read", str);
     free(str);
 }
 
+Test(read_next_n_bytes, should_handle_twice_read, .init = open_file, .fini = close_file)
+{
+    char *str;
+    
+    str = read_next_n_bytes(fd, 4);
+    cr_assert_not_null(str);
+    cr_assert_str_eq("read", str);
+    free(str);
+    
+    str = read_next_n_bytes(fd, 5);
+    cr_assert_not_null(str);
+    cr_assert_str_eq("_next", str);
+    free(str);
+}
+
 Test(read_next_n_bytes, should_handle_read_all, .init = open_file, .fini = close_file)
 {
-    char *str = read_next_n_bytes(fd, 17);
+    char *str;
+    
+    str = read_next_n_bytes(fd, 17);
     cr_assert_not_null(str);
     cr_assert_str_eq("read_next_n_bytes", str);
     free(str);
+    
+    str = read_next_n_bytes(fd, 17);
+    cr_assert_null(str);
 }
