@@ -36,5 +36,5 @@ Test(read_and_display_read_line_n, should_handle_empty_read, .init = open_file, 
 Test(read_and_display_read_line_n, should_handle_non_empty_read, .init = open_file, .fini = close_file)
 {
     read_and_display_read_line_n(fd, 4);
-    cr_assert_stdout_eq_str("read");
+    cr_assert_stdout_eq_str("line 1");
 }
